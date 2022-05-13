@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Dream-25',
       theme: ThemeData(
+        brightness: Brightness.dark,
         primarySwatch: Colors.indigo,
       ),
       routes: {
