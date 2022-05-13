@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Colors.red.shade100,
+            Colors.indigo.shade100,
             Colors.white,
           ],
         )),
@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
             alignment: Alignment.center,
             child: Padding(
               padding: const EdgeInsets.all(100.0),
-              child: Image.asset("assets/images/logo_text.png"),
+              child: Image.asset("assets/images/app_logo.png"),
             )),
       ),
     );

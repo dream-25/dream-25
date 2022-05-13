@@ -1,3 +1,4 @@
+import 'package:drm25/screens/home_screen.dart';
 import 'package:drm25/screens/splash_screen.dart';
 import 'package:drm25/utils/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const SplashScreen(),
         MyRoutes.rootRoute: (context) => const SplashScreen(),
         MyRoutes.splashRoute: (context) => const SplashScreen(),
+        MyRoutes.homeRootRoute: (context) => const HomeScreen(),
       },
     );
   }
