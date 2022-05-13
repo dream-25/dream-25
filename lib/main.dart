@@ -1,9 +1,9 @@
-import 'package:drm25/screens/home_screen.dart';
+import 'package:drm25/screens/home_screen/home_screen.dart';
 import 'package:drm25/screens/splash_screen.dart';
 import 'package:drm25/utils/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'firebase_options.dart';
 import 'screens/login_screen.dart';
 
@@ -12,7 +12,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(Phoenix(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -25,7 +25,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Dream-25',
       theme: ThemeData(
-        brightness: Brightness.dark,
         primarySwatch: Colors.indigo,
       ),
       routes: {

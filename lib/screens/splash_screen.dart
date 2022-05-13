@@ -1,4 +1,5 @@
-import 'package:drm25/screens/home_screen.dart';
+import 'dart:io';
+import 'package:drm25/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -15,19 +16,9 @@ class _SplashScreenState extends State<SplashScreen> {
     _navigateToHome();
   }
 
-  Route _createRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          const HomeScreen(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return child;
-      },
-    );
-  }
-
   _navigateToHome() async {
     await Future.delayed(const Duration(milliseconds: 3100));
-    await Navigator.of(context).push(_createRoute());
+    await Navigator.of(context).pushReplacementNamed(MyRoutes.homeRootRoute);
   }
 
   @override
@@ -37,8 +28,13 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Align(
           alignment: Alignment.center,
           child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.40,
-            child: Image.asset("assets/images/splash_gif.gif"),
+            height: Platform.isAndroid
+                ? MediaQuery.of(context).size.height * 0.20
+                : MediaQuery.of(context).size.height * 0.30,
+            child: Image.asset(
+              "assets/images/splash_gif.gif",
+              gaplessPlayback: false,
+            ),
           )),
     );
   }
