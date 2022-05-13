@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1030571024951",
+    "firebase_url": "https://dream-25-default-rtdb.firebaseio.com",
+    "project_id": "dream-25",
+    "storage_bucket": "dream-25.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030571024951:android:91f611e5d6f0e5e79c15b2",
+        "android_client_info": {
+          "package_name": "com.dreamapp.drm25"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1030571024951-8eesjs0449qafippqkrb5bnee6fqcbhe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJVv9KH2gVJyRZtWIePOSGHYtk3s1-Y6o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1030571024951-8eesjs0449qafippqkrb5bnee6fqcbhe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
