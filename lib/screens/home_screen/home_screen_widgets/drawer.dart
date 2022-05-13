@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:drm25/utils/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -23,9 +24,9 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
 
   Future<void> _handleSignIn() async {
     try {
-      await _googleSignIn
-          .signIn()
-          .then((value) => (value != null) ? Phoenix.rebirth(context) : null);
+      await _googleSignIn.signIn().then((value) => (value != null)
+          ? Navigator.pushReplacementNamed(context, MyRoutes.splashRoute)
+          : null);
     } catch (error) {
       Fluttertoast.showToast(
           timeInSecForIosWeb: 5000,
@@ -35,7 +36,8 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
   }
 
   Future<void> _handleSignOut() async {
-    await _googleSignIn.disconnect().then((value) => Phoenix.rebirth(context));
+    await _googleSignIn.disconnect().then((value) =>
+        Navigator.pushReplacementNamed(context, MyRoutes.splashRoute));
   }
 
   @override
