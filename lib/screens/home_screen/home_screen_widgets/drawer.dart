@@ -27,7 +27,10 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
           .signIn()
           .then((value) => (value != null) ? Phoenix.rebirth(context) : null);
     } catch (error) {
-      Fluttertoast.showToast(msg: error.toString());
+      Fluttertoast.showToast(
+          timeInSecForIosWeb: 5000,
+          msg: error.toString(),
+          backgroundColor: Colors.red);
     }
   }
 
