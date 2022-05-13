@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'firebase_options.dart';
+import 'screens/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const SplashScreen(),
         MyRoutes.rootRoute: (context) => const SplashScreen(),
         MyRoutes.splashRoute: (context) => const SplashScreen(),
+        MyRoutes.loginRoute: (context) => const LoginScreen(),
         MyRoutes.homeRootRoute: (context) => const HomeScreen(),
       },
     );
