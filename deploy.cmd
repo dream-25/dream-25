@@ -6,7 +6,6 @@ set mytime=%time%
 git add .
 git commit . -m "@ItsMohan025   %mydate%  %mytime% %mytimeam%"
 git push -f origin main
-git push -f upstream main
 echo "Deploy Done"
 
 @REM flutter run -d chrome --web-hostname localhost --web-port 5000
