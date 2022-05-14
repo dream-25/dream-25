@@ -36,7 +36,7 @@ class _SavedMessagesState extends State<SavedMessages> {
     super.initState();
   }
 
-  String message = "0";
+  String message = "";
 
   final ServicerStorageService storage = ServicerStorageService();
 
