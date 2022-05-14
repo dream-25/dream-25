@@ -114,6 +114,8 @@ class _SavedMessagesState extends State<SavedMessages> {
                                                 actions: <Widget>[
                                                   TextButton(
                                                       onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
                                                         DocumentReference
                                                             documentReference =
                                                             FirebaseFirestore
@@ -133,9 +135,6 @@ class _SavedMessagesState extends State<SavedMessages> {
                                                               "Deleted Succesfully",
                                                               Colors.red,
                                                               Colors.white);
-
-                                                          Navigator.of(context)
-                                                              .pop();
                                                         });
                                                       },
                                                       child:
@@ -169,6 +168,8 @@ class _SavedMessagesState extends State<SavedMessages> {
                                                 actions: <Widget>[
                                                   TextButton(
                                                       onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
                                                         DocumentReference
                                                             documentReference =
                                                             FirebaseFirestore
@@ -189,8 +190,6 @@ class _SavedMessagesState extends State<SavedMessages> {
                                                               Colors.red,
                                                               Colors.white);
                                                         });
-                                                        Navigator.of(context)
-                                                            .pop();
                                                       },
                                                       child:
                                                           const Text("Delete")),
