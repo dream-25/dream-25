@@ -1,5 +1,7 @@
+import 'package:drm25/widgets/snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../utils/firebase_storage.dart';
 import 'package:shimmer/shimmer.dart';
@@ -18,7 +20,6 @@ class CustomFileMessageSend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ServicerStorageService storage = ServicerStorageService();
-
     return Padding(
       padding: EdgeInsets.fromLTRB(
           MediaQuery.of(context).size.width -
@@ -59,11 +60,39 @@ class CustomFileMessageSend extends StatelessWidget {
                                   alignment: Alignment.centerRight,
                                   child: InkWell(
                                     onTap: () async {
-                                      final Uri _url = Uri.parse(
-                                          audSnapshot.data.toString());
-                                      if (!await launchUrl(_url)) {
-                                        throw 'Could not launch $_url';
+                                      // if (!await launchUrl(_url)) {
+                                      //   showSnackbarC(
+                                      //       context,
+                                      //       "Something went wrong",
+                                      //       Colors.red,
+                                      //       Colors.white);
+                                      // }
+
+                                      String url = audSnapshot.data.toString();
+                                      // ignore: deprecated_member_use
+                                      var urllaunchable = await canLaunch(
+                                          url); //canLaunch is from url_launcher package
+                                      if (urllaunchable) {
+                                        // ignore: deprecated_member_use
+                                        await launch(
+                                            url); //launch is from url_launcher package to launch URL
+                                      } else {
+                                        showSnackbarC(
+                                            context,
+                                            "Something went wrong",
+                                            Colors.red,
+                                            Colors.white);
                                       }
+                                    },
+                                    onLongPress: () async {
+                                      ClipboardData data = ClipboardData(
+                                          text: audSnapshot.data.toString());
+                                      await Clipboard.setData(data);
+                                      showSnackbarC(
+                                          context,
+                                          "Link copied to Clipboard",
+                                          Colors.green,
+                                          Colors.white);
                                     },
                                     child: CircleAvatar(
                                         backgroundColor:

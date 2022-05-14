@@ -182,6 +182,34 @@ class _SavedMessagesState extends State<SavedMessages> {
                                                         });
                                                       },
                                                       child:
+                                                          const Text("Delete")),
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        DocumentReference
+                                                            documentReference =
+                                                            FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    "user_chats/${widget.userEmail.toString().replaceAll("@", "-")}/saved_messages")
+                                                                .doc(snapshot
+                                                                    .data!
+                                                                    .docs[index]
+                                                                    .id);
+
+                                                        documentReference
+                                                            .delete()
+                                                            .whenComplete(() {
+                                                          showSnackbarC(
+                                                              context,
+                                                              "Deleted Succesfully",
+                                                              Colors.red,
+                                                              Colors.white);
+
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        });
+                                                      },
+                                                      child:
                                                           const Text("Delete"))
                                                 ],
                                               );
