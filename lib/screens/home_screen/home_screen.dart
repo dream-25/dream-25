@@ -33,6 +33,10 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.blueGrey.shade900,
         appBar: AppBar(
           foregroundColor: Colors.blueGrey.shade900,
+          title: const Text(
+            "Home",
+            style: TextStyle(color: Colors.white),
+          ),
         ),
         body: SingleChildScrollView(
           child: Column(
