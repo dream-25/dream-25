@@ -221,99 +221,101 @@ class _SavedMessagesState extends State<SavedMessages> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: TextFormField(
-                        controller: _controller,
-                        focusNode: focusNode,
-                        textAlignVertical: TextAlignVertical.center,
-                        keyboardType: TextInputType.multiline,
-                        maxLines: 5,
-                        minLines: 1,
-                        onChanged: (value) {
-                          if (value.isNotEmpty) {
-                            setState(() {
-                              sendButton = true;
-                              message = value;
-                            });
-                          } else {
-                            setState(() {
-                              sendButton = false;
-                            });
-                          }
-                        },
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: " Type a message",
-                          hintStyle: const TextStyle(color: Colors.grey),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              Icons.file_present_rounded,
-                              color: Colors.blueGrey.shade900.withOpacity(.5),
-                            ),
-                            onPressed: () async {
-                              final results = await FilePicker.platform
-                                  .pickFiles(
-                                      allowMultiple: false,
-                                      allowCompression: true,
-                                      type: FileType.any);
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                        child: TextFormField(
+                          controller: _controller,
+                          focusNode: focusNode,
+                          textAlignVertical: TextAlignVertical.center,
+                          keyboardType: TextInputType.multiline,
+                          maxLines: 5,
+                          minLines: 1,
+                          onChanged: (value) {
+                            if (value.isNotEmpty) {
+                              setState(() {
+                                sendButton = true;
+                                message = value;
+                              });
+                            } else {
+                              setState(() {
+                                sendButton = false;
+                              });
+                            }
+                          },
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: " Type a message",
+                            hintStyle: const TextStyle(color: Colors.grey),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                Icons.file_present_rounded,
+                                color: Colors.blueGrey.shade900.withOpacity(.5),
+                              ),
+                              onPressed: () async {
+                                final results = await FilePicker.platform
+                                    .pickFiles(
+                                        allowMultiple: false,
+                                        allowCompression: true,
+                                        type: FileType.any);
 
-                              if (results == null) {
-                                showSnackbarC(context, "No Files Picked",
-                                    Colors.red, Colors.white);
-                              } else {
-                                showSnackbarC(context, "Sending File",
-                                    Colors.amber, Colors.white);
-                                final path = results.files.single.path!;
-                                final fileName = results.files.single.name;
-                                storage
-                                    .uploadFile(path, fileName,
-                                        "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}/")
-                                    .then((value) {
-                                  DateTime now = DateTime.now();
-                                  String formattedDate =
-                                      DateFormat('hh:mm:ss aa').format(now);
-                                  _controller.clear();
-                                  DocumentReference documentReference =
-                                      FirebaseFirestore.instance
-                                          .collection(
-                                              "user_chats/${widget.userEmail.toString().replaceAll("@", "-")}/saved_messages")
-                                          .doc(widget.userEmail
-                                                  .toString()
-                                                  .replaceAll("@", "-") +
-                                              "_" +
-                                              DateTime.now()
-                                                  .millisecondsSinceEpoch
-                                                  .toString());
+                                if (results == null) {
+                                  showSnackbarC(context, "No Files Picked",
+                                      Colors.red, Colors.white);
+                                } else {
+                                  showSnackbarC(context, "Sending File",
+                                      Colors.amber, Colors.white);
+                                  final path = results.files.single.path!;
+                                  final fileName = results.files.single.name;
+                                  storage
+                                      .uploadFile(path, fileName,
+                                          "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}/")
+                                      .then((value) {
+                                    DateTime now = DateTime.now();
+                                    String formattedDate =
+                                        DateFormat('hh:mm:ss aa').format(now);
+                                    _controller.clear();
+                                    DocumentReference documentReference =
+                                        FirebaseFirestore.instance
+                                            .collection(
+                                                "user_chats/${widget.userEmail.toString().replaceAll("@", "-")}/saved_messages")
+                                            .doc(widget.userEmail
+                                                    .toString()
+                                                    .replaceAll("@", "-") +
+                                                "_" +
+                                                DateTime.now()
+                                                    .millisecondsSinceEpoch
+                                                    .toString());
 
-                                  Map<String, String> todoList = {
-                                    "id": widget.userEmail
-                                        .toString()
-                                        .replaceAll("@", "-"),
-                                    "UserEmail": widget.userEmail.toString(),
-                                    "UserName": widget.userName.toString(),
-                                    "msg": message,
-                                    "file_name": fileName,
-                                    "file":
-                                        "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}/$fileName",
-                                    "time": formattedDate,
-                                    "time_mili": DateTime.now()
-                                        .millisecondsSinceEpoch
-                                        .toString(),
-                                    "status": "done",
-                                    "type": "FILE"
-                                  };
-                                  documentReference
-                                      .set(todoList)
-                                      .whenComplete(() async {
-                                    message = "";
+                                    Map<String, String> todoList = {
+                                      "id": widget.userEmail
+                                          .toString()
+                                          .replaceAll("@", "-"),
+                                      "UserEmail": widget.userEmail.toString(),
+                                      "UserName": widget.userName.toString(),
+                                      "msg": message,
+                                      "file_name": fileName,
+                                      "file":
+                                          "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}/$fileName",
+                                      "time": formattedDate,
+                                      "time_mili": DateTime.now()
+                                          .millisecondsSinceEpoch
+                                          .toString(),
+                                      "status": "done",
+                                      "type": "FILE"
+                                    };
+                                    documentReference
+                                        .set(todoList)
+                                        .whenComplete(() async {
+                                      message = "";
+                                      showSnackbarC(context, "Video Sent",
+                                          Colors.green, Colors.white);
+                                    });
                                   });
-
-                                  showSnackbarC(context, "Video Sent",
-                                      Colors.green, Colors.white);
-                                });
-                              }
-                            },
+                                }
+                              },
+                            ),
+                            contentPadding: const EdgeInsets.all(5),
                           ),
-                          contentPadding: const EdgeInsets.all(5),
                         ),
                       ),
                     ),
@@ -363,7 +365,9 @@ class _SavedMessagesState extends State<SavedMessages> {
                           };
                           documentReference
                               .set(todoList)
-                              .whenComplete(() async {});
+                              .whenComplete(() async {
+                            message = "";
+                          });
                         }
                       },
                     ),
