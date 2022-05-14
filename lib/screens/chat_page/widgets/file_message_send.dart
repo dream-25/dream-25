@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:drm25/widgets/snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -70,22 +72,10 @@ class CustomFileMessageSend extends StatelessWidget {
                                   alignment: Alignment.centerRight,
                                   child: InkWell(
                                     onTap: () async {
-                                      // if (!await launchUrl(_url)) {
-                                      //   showSnackbarC(
-                                      //       context,
-                                      //       "Something went wrong",
-                                      //       Colors.red,
-                                      //       Colors.white);
-                                      // }
-
                                       String url = audSnapshot.data.toString();
-                                      // ignore: deprecated_member_use
-                                      var urllaunchable = await canLaunch(
-                                          url); //canLaunch is from url_launcher package
+                                      var urllaunchable = await canLaunch(url);
                                       if (urllaunchable) {
-                                        // ignore: deprecated_member_use
-                                        await launch(
-                                            url); //launch is from url_launcher package to launch URL
+                                        await launch(url);
                                       } else {
                                         showSnackbarC(
                                             context,
