@@ -138,7 +138,55 @@ class _SavedMessagesState extends State<SavedMessages> {
                                           documentSnapshot["status"]),
                                     )
                                   : InkWell(
-                                      onLongPress: () {},
+                                      onLongPress: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                title: const Text(
+                                                    "Delete this Message",
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                    )),
+                                                backgroundColor:
+                                                    Colors.blueGrey.shade800,
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        DocumentReference
+                                                            documentReference =
+                                                            FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    "user_chats/${widget.userEmail.toString().replaceAll("@", "-")}/saved_messages")
+                                                                .doc(snapshot
+                                                                    .data!
+                                                                    .docs[index]
+                                                                    .id);
+
+                                                        documentReference
+                                                            .delete()
+                                                            .whenComplete(() {
+                                                          showSnackbarC(
+                                                              context,
+                                                              "Deleted Succesfully",
+                                                              Colors.red,
+                                                              Colors.white);
+
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        });
+                                                      },
+                                                      child:
+                                                          const Text("Delete"))
+                                                ],
+                                              );
+                                            });
+                                      },
                                       child: CustomFileMessageSend(
                                         documentSnapshot["msg"],
                                         documentSnapshot["time"],
