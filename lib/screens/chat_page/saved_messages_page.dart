@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:file_picker/file_picker.dart';
 
@@ -29,6 +30,7 @@ class SavedMessages extends StatefulWidget {
 }
 
 class _SavedMessagesState extends State<SavedMessages> {
+  bool loading = false;
   final TextEditingController _controller = TextEditingController();
   bool show = false;
   FocusNode focusNode = FocusNode();
@@ -68,6 +70,13 @@ class _SavedMessagesState extends State<SavedMessages> {
             padding: const EdgeInsets.fromLTRB(0, 0, 0, 70),
             child: SingleChildScrollView(
               child: Column(mainAxisSize: MainAxisSize.min, children: [
+                Visibility(
+                    visible: (loading == true) ? true : false,
+                    child: SizedBox(
+                      height: 5,
+                      width: MediaQuery.of(context).size.width,
+                      child: const LinearProgressIndicator(),
+                    )),
                 StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance
                         .collection(
@@ -254,63 +263,140 @@ class _SavedMessagesState extends State<SavedMessages> {
                                 color: Colors.blueGrey.shade900.withOpacity(.5),
                               ),
                               onPressed: () async {
-                                FilePickerResult? result =
-                                    await FilePicker.platform.pickFiles();
-                                if (result != null) {
-                                  showSnackbarC(context, "Sending File",
-                                      Colors.amber, Colors.white);
-                                  Uint8List? file = result.files.first.bytes;
-                                  String fileName = result.files.first.name;
-                                  FirebaseStorage.instance
-                                      .ref()
-                                      .child(
-                                          "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}//$fileName")
-                                      .putData(file!)
-                                      .then((p0) {
-                                    DateTime now = DateTime.now();
-                                    String formattedDate =
-                                        DateFormat('hh:mm:ss aa').format(now);
-                                    _controller.clear();
-                                    DocumentReference documentReference =
-                                        FirebaseFirestore.instance
-                                            .collection(
-                                                "user_chats/${widget.userEmail.toString().replaceAll("@", "-")}/saved_messages")
-                                            .doc(widget.userEmail
-                                                    .toString()
-                                                    .replaceAll("@", "-") +
-                                                "_" +
-                                                DateTime.now()
-                                                    .millisecondsSinceEpoch
-                                                    .toString());
-
-                                    Map<String, String> todoList = {
-                                      "id": widget.userEmail
-                                          .toString()
-                                          .replaceAll("@", "-"),
-                                      "UserEmail": widget.userEmail.toString(),
-                                      "UserName": widget.userName.toString(),
-                                      "msg": message,
-                                      "file_name": fileName,
-                                      "file":
-                                          "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}/$fileName",
-                                      "time": formattedDate,
-                                      "time_mili": DateTime.now()
-                                          .millisecondsSinceEpoch
-                                          .toString(),
-                                      "status": "done",
-                                      "type": "FILE"
-                                    };
-                                    documentReference
-                                        .set(todoList)
-                                        .whenComplete(() async {
-                                      message = "";
-                                      showSnackbarC(context, "File Sent",
-                                          Colors.green, Colors.white);
+                                if (kIsWeb) {
+                                  FilePickerResult? result =
+                                      await FilePicker.platform.pickFiles();
+                                  if (result != null) {
+                                    setState(() {
+                                      loading = true;
                                     });
-                                  });
+                                    showSnackbarC(context, "Sending File",
+                                        Colors.amber, Colors.white);
+                                    Uint8List? file = result.files.first.bytes;
+                                    String fileName = result.files.first.name;
+                                    FirebaseStorage.instance
+                                        .ref()
+                                        .child(
+                                            "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}//$fileName")
+                                        .putData(file!)
+                                        .then((p0) {
+                                      DateTime now = DateTime.now();
+                                      String formattedDate =
+                                          DateFormat('hh:mm:ss aa').format(now);
+                                      _controller.clear();
+                                      DocumentReference documentReference =
+                                          FirebaseFirestore.instance
+                                              .collection(
+                                                  "user_chats/${widget.userEmail.toString().replaceAll("@", "-")}/saved_messages")
+                                              .doc(widget.userEmail
+                                                      .toString()
+                                                      .replaceAll("@", "-") +
+                                                  "_" +
+                                                  DateTime.now()
+                                                      .millisecondsSinceEpoch
+                                                      .toString());
+
+                                      Map<String, String> todoList = {
+                                        "id": widget.userEmail
+                                            .toString()
+                                            .replaceAll("@", "-"),
+                                        "UserEmail":
+                                            widget.userEmail.toString(),
+                                        "UserName": widget.userName.toString(),
+                                        "msg": message,
+                                        "file_name": fileName,
+                                        "file":
+                                            "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}/$fileName",
+                                        "time": formattedDate,
+                                        "time_mili": DateTime.now()
+                                            .millisecondsSinceEpoch
+                                            .toString(),
+                                        "status": "done",
+                                        "type": "FILE"
+                                      };
+                                      documentReference
+                                          .set(todoList)
+                                          .whenComplete(() async {
+                                        message = "";
+                                        showSnackbarC(context, "File Sent",
+                                            Colors.green, Colors.white);
+                                        setState(() {
+                                          loading = false;
+                                        });
+                                      });
+                                    });
+                                  } else {
+                                    showSnackbarC(context, "No Files Picked",
+                                        Colors.red, Colors.white);
+                                  }
                                 } else {
-                                  showSnackbarC(context, "No Files Picked",
-                                      Colors.red, Colors.white);
+                                  final results = await FilePicker.platform
+                                      .pickFiles(
+                                          allowMultiple: false,
+                                          allowCompression: true,
+                                          type: FileType.any);
+
+                                  if (results == null) {
+                                    showSnackbarC(context, "No Files Picked",
+                                        Colors.red, Colors.white);
+                                  } else {
+                                    setState(() {
+                                      loading = true;
+                                    });
+                                    showSnackbarC(context, "Sending File",
+                                        Colors.amber, Colors.white);
+                                    final path = results.files.single.path!;
+                                    final fileName = results.files.single.name;
+                                    storage
+                                        .uploadFile(path, fileName,
+                                            "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}/")
+                                        .then((value) {
+                                      DateTime now = DateTime.now();
+                                      String formattedDate =
+                                          DateFormat('hh:mm:ss aa').format(now);
+                                      _controller.clear();
+                                      DocumentReference documentReference =
+                                          FirebaseFirestore.instance
+                                              .collection(
+                                                  "user_chats/${widget.userEmail.toString().replaceAll("@", "-")}/saved_messages")
+                                              .doc(widget.userEmail
+                                                      .toString()
+                                                      .replaceAll("@", "-") +
+                                                  "_" +
+                                                  DateTime.now()
+                                                      .millisecondsSinceEpoch
+                                                      .toString());
+
+                                      Map<String, String> todoList = {
+                                        "id": widget.userEmail
+                                            .toString()
+                                            .replaceAll("@", "-"),
+                                        "UserEmail":
+                                            widget.userEmail.toString(),
+                                        "UserName": widget.userName.toString(),
+                                        "msg": message,
+                                        "file_name": fileName,
+                                        "file":
+                                            "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}/$fileName",
+                                        "time": formattedDate,
+                                        "time_mili": DateTime.now()
+                                            .millisecondsSinceEpoch
+                                            .toString(),
+                                        "status": "done",
+                                        "type": "FILE"
+                                      };
+                                      documentReference
+                                          .set(todoList)
+                                          .whenComplete(() async {
+                                        message = "";
+                                        showSnackbarC(context, "File Sent",
+                                            Colors.green, Colors.white);
+                                        setState(() {
+                                          loading = false;
+                                        });
+                                      });
+                                    });
+                                  }
                                 }
                               },
                             ),

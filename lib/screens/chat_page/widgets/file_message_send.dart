@@ -49,12 +49,22 @@ class CustomFileMessageSend extends StatelessWidget {
                               backgroundColor: Colors.indigo.shade700,
                               child: const Icon(CupertinoIcons
                                   .rectangle_fill_on_rectangle_angled_fill)),
-                          Text("   " + fileName,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                              )),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width - 235,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                              child: Text(
+                                fileName,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
                           Expanded(
                               child: Align(
                                   alignment: Alignment.centerRight,
