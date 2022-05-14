@@ -52,7 +52,8 @@ class CustomFileMessageSend extends StatelessWidget {
                               child: const Icon(CupertinoIcons
                                   .rectangle_fill_on_rectangle_angled_fill)),
                           SizedBox(
-                            width: MediaQuery.of(context).size.width - 235,
+                            width:
+                                MediaQuery.of(context).size.width * 3 / 4 - 124,
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
                               child: Text(
