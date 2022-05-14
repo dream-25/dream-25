@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:file_picker/file_picker.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/snackbar.dart';
@@ -280,24 +283,19 @@ class _SavedMessagesState extends State<SavedMessages> {
                                 color: Colors.blueGrey.shade900.withOpacity(.5),
                               ),
                               onPressed: () async {
-                                final results = await FilePicker.platform
-                                    .pickFiles(
-                                        allowMultiple: false,
-                                        allowCompression: true,
-                                        type: FileType.any);
-
-                                if (results == null) {
-                                  showSnackbarC(context, "No Files Picked",
-                                      Colors.red, Colors.white);
-                                } else {
+                                FilePickerResult? result =
+                                    await FilePicker.platform.pickFiles();
+                                if (result != null) {
                                   showSnackbarC(context, "Sending File",
                                       Colors.amber, Colors.white);
-                                  final path = results.files.single.path!;
-                                  final fileName = results.files.single.name;
-                                  storage
-                                      .uploadFile(path, fileName,
-                                          "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}/")
-                                      .then((value) {
+                                  Uint8List? file = result.files.first.bytes;
+                                  String fileName = result.files.first.name;
+                                  FirebaseStorage.instance
+                                      .ref()
+                                      .child(
+                                          "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}//$fileName")
+                                      .putData(file!)
+                                      .then((p0) {
                                     DateTime now = DateTime.now();
                                     String formattedDate =
                                         DateFormat('hh:mm:ss aa').format(now);
@@ -335,10 +333,13 @@ class _SavedMessagesState extends State<SavedMessages> {
                                         .set(todoList)
                                         .whenComplete(() async {
                                       message = "";
-                                      showSnackbarC(context, "Video Sent",
+                                      showSnackbarC(context, "File Sent",
                                           Colors.green, Colors.white);
                                     });
                                   });
+                                } else {
+                                  showSnackbarC(context, "No Files Picked",
+                                      Colors.red, Colors.white);
                                 }
                               },
                             ),
