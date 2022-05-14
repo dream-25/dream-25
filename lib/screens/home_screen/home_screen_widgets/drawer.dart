@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:drm25/screens/chat_page/saved_messages_page.dart';
 import 'package:drm25/utils/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -94,13 +94,24 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                               )),
                 ),
               ),
-              const ListTile(
-                  leading: Icon(CupertinoIcons.bubble_right_fill,
-                      color: Colors.white),
-                  title: Text(
-                    "Chat",
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  )),
+              InkWell(
+                onTap: (widget.userEmail != "Welcome to the dream's world")
+                    ? () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => SavedMessages(
+                                widget.userName.toString(),
+                                widget.userEmail.toString(),
+                                widget.userProfileImageUrl.toString())));
+                      }
+                    : _handleSignIn,
+                child: const ListTile(
+                    leading: Icon(CupertinoIcons.bolt_circle_fill,
+                        color: Colors.white),
+                    title: Text(
+                      "Saved Messages",
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    )),
+              ),
               const ListTile(
                   leading:
                       Icon(CupertinoIcons.profile_circled, color: Colors.white),

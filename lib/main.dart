@@ -4,6 +4,7 @@ import 'package:drm25/utils/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
+import 'screens/chat_page/saved_messages_page.dart';
 import 'screens/login_screen.dart';
 
 void main() async {
@@ -26,12 +27,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
+      initialRoute: '/',
       routes: {
         '/': (context) => const SplashScreen(),
         MyRoutes.rootRoute: (context) => const SplashScreen(),
         MyRoutes.splashRoute: (context) => const SplashScreen(),
         MyRoutes.loginRoute: (context) => const LoginScreen(),
         MyRoutes.homeRootRoute: (context) => const HomeScreen(),
+        MyRoutes.savedMessagesRoute: (context) => SavedMessages("", "", ""),
       },
     );
   }
