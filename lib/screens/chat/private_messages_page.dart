@@ -324,13 +324,9 @@ class _PrivateMessagesState extends State<PrivateMessages> {
                                           FirebaseFirestore.instance
                                               .collection(
                                                   "user_chats/${widget.userEmail.toString().replaceAll("@", "-")}/saved_messages")
-                                              .doc(widget.userEmail
-                                                      .toString()
-                                                      .replaceAll("@", "-") +
-                                                  "_" +
-                                                  DateTime.now()
-                                                      .millisecondsSinceEpoch
-                                                      .toString());
+                                              .doc(DateTime.now()
+                                                  .millisecondsSinceEpoch
+                                                  .toString());
 
                                       Map<String, String> todoList = {
                                         "id": widget.userEmail
@@ -395,13 +391,9 @@ class _PrivateMessagesState extends State<PrivateMessages> {
                                           FirebaseFirestore.instance
                                               .collection(
                                                   "user_chats/${widget.userEmail.toString().replaceAll("@", "-")}/saved_messages")
-                                              .doc(widget.userEmail
-                                                      .toString()
-                                                      .replaceAll("@", "-") +
-                                                  "_" +
-                                                  DateTime.now()
-                                                      .millisecondsSinceEpoch
-                                                      .toString());
+                                              .doc(DateTime.now()
+                                                  .millisecondsSinceEpoch
+                                                  .toString());
 
                                       Map<String, String> todoList = {
                                         "id": widget.userEmail
@@ -462,13 +454,9 @@ class _PrivateMessagesState extends State<PrivateMessages> {
                               .instance
                               .collection(
                                   "user_chats/${widget.userEmail.toString().replaceAll("@", "-")}/saved_messages")
-                              .doc(widget.userEmail
-                                      .toString()
-                                      .replaceAll("@", "-") +
-                                  "_" +
-                                  DateTime.now()
-                                      .millisecondsSinceEpoch
-                                      .toString());
+                              .doc(DateTime.now()
+                                  .millisecondsSinceEpoch
+                                  .toString());
 
                           Map<String, String> todoList = {
                             "id": widget.userEmail

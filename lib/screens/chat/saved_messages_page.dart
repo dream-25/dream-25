@@ -498,10 +498,7 @@ class _SavedMessagesState extends State<SavedMessages> {
                                           FirebaseFirestore.instance
                                               .collection(
                                                   "user_chats/messages/saved_messages")
-                                              .doc(widget.userEmail
-                                                      .toString()
-                                                      .replaceAll("@", "-") +
-                                                  "_" +
+                                              .doc(
                                                   DateTime.now()
                                                       .millisecondsSinceEpoch
                                                       .toString());
@@ -568,10 +565,7 @@ class _SavedMessagesState extends State<SavedMessages> {
                                           FirebaseFirestore.instance
                                               .collection(
                                                   "user_chats/messages/saved_messages")
-                                              .doc(widget.userEmail
-                                                      .toString()
-                                                      .replaceAll("@", "-") +
-                                                  "_" +
+                                              .doc(
                                                   DateTime.now()
                                                       .millisecondsSinceEpoch
                                                       .toString());
@@ -634,10 +628,7 @@ class _SavedMessagesState extends State<SavedMessages> {
                               FirebaseFirestore.instance
                                   .collection(
                                       "user_chats/messages/saved_messages")
-                                  .doc(widget.userEmail
-                                          .toString()
-                                          .replaceAll("@", "-") +
-                                      "_" +
+                                  .doc(
                                       DateTime.now()
                                           .millisecondsSinceEpoch
                                           .toString());
