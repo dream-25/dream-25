@@ -37,7 +37,7 @@ class _HomeScreenState extends State<CustomRoom> {
 
   Future<void> _handleSignIn() async {
     try {
-      await _googleSignIn.signIn().then((value) => null);
+      await _googleSignIn.signIn();
     } catch (error) {
       Fluttertoast.showToast(
           timeInSecForIosWeb: 5000,
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<CustomRoom> {
   }
 
   Future<void> _handleSignOut() async {
-    await _googleSignIn.disconnect().then((value) => null);
+    await _googleSignIn.disconnect();
   }
 
   @override

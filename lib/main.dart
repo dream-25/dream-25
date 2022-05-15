@@ -20,32 +20,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Dream-25',
-        theme: ThemeData(
-          primarySwatch: Colors.indigo,
-        ),
-        routes: {
-          MyRoutes.rootRoute: (context) => const SplashScreen(),
-          MyRoutes.splashRoute: (context) => const SplashScreen(),
-          MyRoutes.loginRoute: (context) => const LoginScreen(),
-          MyRoutes.homeRootRoute: (context) => const HomeScreen(),
-        },
-        onGenerateRoute: (settings) {
-          final settingsUri = Uri.parse(settings.name.toString());
+      debugShowCheckedModeBanner: false,
+      title: 'Dream-25',
+      theme: ThemeData(
+        primarySwatch: Colors.indigo,
+      ),
+      routes: {
+        MyRoutes.splashRoute: (context) => const SplashScreen(),
+        MyRoutes.loginRoute: (context) => const LoginScreen(),
+        MyRoutes.homeRootRoute: (context) => const HomeScreen(),
+      },
+      onGenerateRoute: (settings) {
+        final settingsUri = Uri.parse(settings.name.toString());
 
-          if ((settings.name.toString().contains("custom_room")) &&
-              (settingsUri.queryParameters['rnm']!.isNotEmpty) &&
-              (settingsUri.queryParameters['rn']!.isNotEmpty)) {
-            return MaterialPageRoute(
-                builder: (context) => CustomRoom(
-                      settingsUri.queryParameters['rnm'].toString(),
-                      settingsUri.queryParameters['rn'].toString(),
-                    ));
-          } else {
-            return MaterialPageRoute(
-                builder: (context) => const SplashScreen());
-          }
-        });
+        if ((settings.name.toString().contains("custom_room")) &&
+            (settingsUri.queryParameters['rnm']!.isNotEmpty) &&
+            (settingsUri.queryParameters['rn']!.isNotEmpty)) {
+          return MaterialPageRoute(
+              builder: (context) => CustomRoom(
+                    settingsUri.queryParameters['rnm'].toString(),
+                    settingsUri.queryParameters['rn'].toString(),
+                  ));
+        } else {
+          return MaterialPageRoute(builder: (context) => const SplashScreen());
+        }
+      },
+    );
   }
 }
