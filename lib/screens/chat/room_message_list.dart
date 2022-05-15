@@ -335,9 +335,7 @@ class _RoomMessageListState extends State<RoomMessageList> {
                                         onTap: () async {
                                           ClipboardData data = ClipboardData(
                                               text:
-                                                  """Link - http://dream-25.web.app/#/custom_room?rnm=${documentSnapshot['room_name']}&rn=${documentSnapshot['room_no']}&p=${documentSnapshot['room_password']}
-                                            password - ${documentSnapshot['room_password']}
-                                                  """);
+                                                  "http://dream-25.web.app/#/custom_room?rnm=${documentSnapshot['room_name']}&rn=${documentSnapshot['room_no']}&p=${documentSnapshot['room_password']}");
                                           await Clipboard.setData(data);
                                           showSnackbarC(
                                               context,
