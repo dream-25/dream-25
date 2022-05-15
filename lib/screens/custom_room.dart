@@ -197,7 +197,7 @@ class _HomeScreenState extends State<CustomRoom> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .height *
-                                                            0.35,
+                                                            0.152,
                                                     child: Column(
                                                       children: [
                                                         Padding(
@@ -249,7 +249,8 @@ class _HomeScreenState extends State<CustomRoom> {
                                                             padding: EdgeInsets
                                                                 .fromLTRB(30,
                                                                     16, 30, 16),
-                                                            child: Text("Save"),
+                                                            child:
+                                                                Text("Login"),
                                                           ),
                                                         )
                                                       ],

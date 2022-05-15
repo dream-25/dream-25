@@ -99,7 +99,7 @@ class _RoomMessageListState extends State<RoomMessageList> {
                                           4,
                                       height:
                                           MediaQuery.of(context).size.height *
-                                              0.35,
+                                              0.152,
                                       child: Column(
                                         children: [
                                           Padding(
@@ -143,7 +143,7 @@ class _RoomMessageListState extends State<RoomMessageList> {
                                             child: const Padding(
                                               padding: EdgeInsets.fromLTRB(
                                                   30, 16, 30, 16),
-                                              child: Text("Save"),
+                                              child: Text("Login"),
                                             ),
                                           )
                                         ],
@@ -160,7 +160,7 @@ class _RoomMessageListState extends State<RoomMessageList> {
                                       "biswasmohan2529@gmail.com")
                               ? SizedBox(
                                   width: MediaQuery.of(context).size.width -
-                                      MediaQuery.of(context).size.width * 0.75,
+                                      MediaQuery.of(context).size.width * 0.66,
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [

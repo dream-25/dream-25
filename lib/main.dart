@@ -25,9 +25,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.indigo,
         ),
-        initialRoute: '/',
         routes: {
-          '/': (context) => const SplashScreen(),
           MyRoutes.rootRoute: (context) => const SplashScreen(),
           MyRoutes.splashRoute: (context) => const SplashScreen(),
           MyRoutes.loginRoute: (context) => const LoginScreen(),
@@ -45,7 +43,8 @@ class MyApp extends StatelessWidget {
                       settingsUri.queryParameters['rn'].toString(),
                     ));
           } else {
-            return null;
+            return MaterialPageRoute(
+                builder: (context) => const SplashScreen());
           }
         });
   }
