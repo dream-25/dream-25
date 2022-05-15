@@ -2,6 +2,7 @@ import 'package:drm25/screens/custom_room.dart';
 import 'package:drm25/screens/home_screen/home_screen.dart';
 import 'package:drm25/screens/splash_screen.dart';
 import 'package:drm25/utils/routes.dart';
+import 'package:drm25/utils/routes_generator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
@@ -24,27 +25,22 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.indigo,
         ),
-        initialRoute: '/',
-        routes: {
-          '/': (context) => const SplashScreen(),
-          MyRoutes.rootRoute: (context) => const SplashScreen(),
-          MyRoutes.splashRoute: (context) => const SplashScreen(),
-          MyRoutes.homeRootRoute: (context) => const HomeScreen(),
-          MyRoutes.customRoomRoute: (context) => CustomRoom("", ""),
-        },
-        onGenerateRoute: (settings) {
-          final settingsUri = Uri.parse(settings.name.toString());
-          if ((settings.name.toString().contains("custom_room")) &&
-              (settingsUri.queryParameters['rnm']!.isNotEmpty) &&
-              (settingsUri.queryParameters['rn']!.isNotEmpty)) {
-            return MaterialPageRoute(
-                builder: (context) => CustomRoom(
-                      settingsUri.queryParameters['rnm'].toString(),
-                      settingsUri.queryParameters['rn'].toString(),
-                    ));
-          } else {
-            return null;
-          }
-        });
+        initialRoute: MyRoutes.rootRoute,
+        onGenerateRoute: RouteGenerator.generateRoute);
   }
 }
+
+//  onGenerateRoute: (settings) {
+//           final settingsUri = Uri.parse(settings.name.toString());
+//           if ((settings.name.toString().contains("custom_room")) &&
+//               (settingsUri.queryParameters['rnm']!.isNotEmpty) &&
+//               (settingsUri.queryParameters['rn']!.isNotEmpty)) {
+//             return MaterialPageRoute(
+//                 builder: (context) => CustomRoom(
+//                       settingsUri.queryParameters['rnm'].toString(),
+//                       settingsUri.queryParameters['rn'].toString(),
+//                     ));
+//           } else {
+//             return null;
+//           }
+//         });
