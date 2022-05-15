@@ -8,7 +8,7 @@ class RouteGenerator {
     final settingsUri = Uri.parse(settings.name.toString());
 
     switch (settings.name) {
-      case "/":
+      case "/home":
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case '/user_splash':
         return MaterialPageRoute(builder: (_) => const SplashScreen());
