@@ -12,7 +12,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _navigateToHome();
   }
 
   _navigateToHome() async {
@@ -22,6 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _navigateToHome();
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Align(

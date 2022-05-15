@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
                     settingsUri.queryParameters['rn'].toString(),
                   ));
         } else {
-          return MaterialPageRoute(builder: (context) => const SplashScreen());
+          return null;
         }
       },
     );
