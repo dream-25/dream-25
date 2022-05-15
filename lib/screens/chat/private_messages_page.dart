@@ -15,11 +15,11 @@ import '../../utils/firebase_storage.dart';
 import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
-class SavedMessages extends StatefulWidget {
+class PrivateMessages extends StatefulWidget {
   String userName;
   String userEmail;
   String userProfileImageUrl;
-  SavedMessages(
+  PrivateMessages(
     this.userName,
     this.userEmail,
     this.userProfileImageUrl, {
@@ -27,10 +27,10 @@ class SavedMessages extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<SavedMessages> createState() => _SavedMessagesState();
+  State<PrivateMessages> createState() => _PrivateMessagesState();
 }
 
-class _SavedMessagesState extends State<SavedMessages> {
+class _PrivateMessagesState extends State<PrivateMessages> {
   bool loading = false;
   final TextEditingController _controller = TextEditingController();
   bool show = false;
@@ -55,13 +55,7 @@ class _SavedMessagesState extends State<SavedMessages> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: const [
-            CircleAvatar(
-              backgroundImage: AssetImage("assets/images/app_logo.png"),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Text(" Dream-25", style: TextStyle(color: Colors.white)),
+            Text("Private Messages", style: TextStyle(color: Colors.white)),
           ],
         ),
         iconTheme: const IconThemeData(color: Colors.white),

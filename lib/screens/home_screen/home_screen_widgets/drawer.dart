@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:drm25/screens/chat_page/saved_messages_page.dart';
 import 'package:drm25/utils/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../../chat/private_messages_page.dart';
+import '../../chat/saved_messages_page.dart';
 
 // ignore: must_be_immutable
 class HomeScreenDrawer extends StatefulWidget {
@@ -98,7 +100,7 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                 onTap: (widget.userEmail != "Welcome to the dream's world")
                     ? () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => SavedMessages(
+                            builder: (context) => PrivateMessages(
                                 widget.userName.toString(),
                                 widget.userEmail.toString(),
                                 widget.userProfileImageUrl.toString())));
@@ -108,17 +110,28 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                     leading: Icon(CupertinoIcons.bolt_circle_fill,
                         color: Colors.white),
                     title: Text(
+                      "Private Messages",
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    )),
+              ),
+              InkWell(
+                onTap: (widget.userEmail != "Welcome to the dream's world")
+                    ? () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => SavedMessages(
+                                widget.userName.toString(),
+                                widget.userEmail.toString(),
+                                widget.userProfileImageUrl.toString())));
+                      }
+                    : _handleSignIn,
+                child: const ListTile(
+                    leading:
+                        Icon(CupertinoIcons.text_bubble, color: Colors.white),
+                    title: Text(
                       "Saved Messages",
                       style: TextStyle(fontSize: 16, color: Colors.white),
                     )),
               ),
-              const ListTile(
-                  leading:
-                      Icon(CupertinoIcons.profile_circled, color: Colors.white),
-                  title: Text(
-                    "Profile",
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  )),
               InkWell(
                 onTap: _handleSignOut,
                 child: const ListTile(
@@ -136,10 +149,10 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                 color: const Color.fromARGB(255, 110, 111, 133),
               ),
               const ListTile(
-                  leading: Icon(CupertinoIcons.video_camera_solid,
+                  leading: Icon(CupertinoIcons.checkmark_shield,
                       color: Colors.white),
                   title: Text(
-                    "Videos",
+                    "Dream Softwares",
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   )),
             ],
