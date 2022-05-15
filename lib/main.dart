@@ -1,10 +1,10 @@
-import 'package:drm25/screens/custom_room.dart';
 import 'package:drm25/screens/home_screen/home_screen.dart';
 import 'package:drm25/screens/splash_screen.dart';
 import 'package:drm25/utils/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
+import 'screens/custom_room.dart';
 import 'screens/login_screen.dart';
 
 void main() async {
@@ -32,7 +32,6 @@ class MyApp extends StatelessWidget {
           MyRoutes.splashRoute: (context) => const SplashScreen(),
           MyRoutes.loginRoute: (context) => const LoginScreen(),
           MyRoutes.homeRootRoute: (context) => const HomeScreen(),
-          MyRoutes.customRoomRoute: (context) => CustomRoom("", "", ""),
         },
         onGenerateRoute: (settings) {
           final settingsUri = Uri.parse(settings.name.toString());
@@ -44,7 +43,6 @@ class MyApp extends StatelessWidget {
                 builder: (context) => CustomRoom(
                       settingsUri.queryParameters['rnm'].toString(),
                       settingsUri.queryParameters['rn'].toString(),
-                      settingsUri.queryParameters['p'].toString(),
                     ));
           } else {
             return null;

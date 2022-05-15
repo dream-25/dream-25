@@ -6,17 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../utils/routes.dart';
 import '../widgets/snackbar.dart';
 import 'chat/room_messages_page.dart';
 
 class CustomRoom extends StatefulWidget {
   String roomName;
   String roomNo;
-  String roomPassword;
 
-  CustomRoom(this.roomName, this.roomNo, this.roomPassword, {Key? key})
-      : super(key: key);
+  CustomRoom(this.roomName, this.roomNo, {Key? key}) : super(key: key);
 
   @override
   State<CustomRoom> createState() => _HomeScreenState();
@@ -141,8 +138,6 @@ class _HomeScreenState extends State<CustomRoom> {
                           .collection("user_chats/rooms/all")
                           .where("room_name", isEqualTo: widget.roomName)
                           .where("room_no", isEqualTo: widget.roomNo)
-                          .where("room_password",
-                              isEqualTo: widget.roomPassword)
                           .snapshots(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData && snapshot.data != null) {
