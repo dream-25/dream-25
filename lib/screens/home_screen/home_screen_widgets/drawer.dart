@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:drm25/screens/chat/room_message_list.dart';
 import 'package:drm25/utils/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../chat/private_messages_page.dart';
-import '../../chat/saved_messages_page.dart';
+import '../../chat/room_messages_page.dart';
 
 // ignore: must_be_immutable
 class HomeScreenDrawer extends StatefulWidget {
@@ -100,6 +101,30 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                 onTap: (widget.userEmail != "Welcome to the dream's world")
                     ? () {
                         Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => RoomMessageList(
+                                widget.userName.toString(),
+                                widget.userEmail.toString(),
+                                widget.userProfileImageUrl.toString())));
+                      }
+                    : _handleSignIn,
+                child: const ListTile(
+                  leading: Icon(
+                    CupertinoIcons.layers_fill,
+                    color: Colors.white,
+                  ),
+                  title: Text(
+                    "Rooms",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: (widget.userEmail != "Welcome to the dream's world")
+                    ? () {
+                        Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => PrivateMessages(
                                 widget.userName.toString(),
                                 widget.userEmail.toString(),
@@ -118,19 +143,28 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                 onTap: (widget.userEmail != "Welcome to the dream's world")
                     ? () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => SavedMessages(
-                                widget.userName.toString(),
-                                widget.userEmail.toString(),
-                                widget.userProfileImageUrl.toString())));
+                            builder: (context) => RoomMessages(
+                                  widget.userName.toString(),
+                                  widget.userEmail.toString(),
+                                  widget.userProfileImageUrl.toString(),
+                                  "Community",
+                                  "1",
+                                )));
                       }
                     : _handleSignIn,
                 child: const ListTile(
                     leading:
                         Icon(CupertinoIcons.text_bubble, color: Colors.white),
                     title: Text(
-                      "Saved Messages",
+                      "Community",
                       style: TextStyle(fontSize: 16, color: Colors.white),
                     )),
+              ),
+              Container(
+                height: 0.5,
+                width: MediaQuery.of(context).size.width - 120,
+                margin: const EdgeInsets.fromLTRB(17, 0, 12, 17),
+                color: const Color.fromARGB(255, 110, 111, 133),
               ),
               InkWell(
                 onTap: _handleSignOut,
