@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../widgets/snackbar.dart';
 import 'widgets/file_message_send.dart';
@@ -138,7 +139,28 @@ class _SavedMessagesState extends State<SavedMessages> {
                                                         });
                                                       },
                                                       child:
-                                                          const Text("Delete"))
+                                                          const Text("Delete")),
+                                                  TextButton(
+                                                    onPressed: () async {
+                                                      Navigator.of(context)
+                                                          .pop();
+
+                                                      ClipboardData data =
+                                                          ClipboardData(
+                                                              text:
+                                                                  documentSnapshot[
+                                                                      "msg"]);
+                                                      await Clipboard.setData(
+                                                          data);
+                                                      showSnackbarC(
+                                                          context,
+                                                          "Copied Succesfully",
+                                                          Colors.green,
+                                                          Colors.white);
+                                                    },
+                                                    child: const Text(
+                                                        "Copy Message"),
+                                                  ),
                                                 ],
                                               );
                                             });
@@ -167,32 +189,53 @@ class _SavedMessagesState extends State<SavedMessages> {
                                                     Colors.blueGrey.shade800,
                                                 actions: <Widget>[
                                                   TextButton(
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                        DocumentReference
-                                                            documentReference =
-                                                            FirebaseFirestore
-                                                                .instance
-                                                                .collection(
-                                                                    "user_chats/${widget.userEmail.toString().replaceAll("@", "-")}/saved_messages")
-                                                                .doc(snapshot
-                                                                    .data!
-                                                                    .docs[index]
-                                                                    .id);
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                      DocumentReference
+                                                          documentReference =
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  "user_chats/${widget.userEmail.toString().replaceAll("@", "-")}/saved_messages")
+                                                              .doc(snapshot
+                                                                  .data!
+                                                                  .docs[index]
+                                                                  .id);
 
-                                                        documentReference
-                                                            .delete()
-                                                            .whenComplete(() {
-                                                          showSnackbarC(
-                                                              context,
-                                                              "Deleted Succesfully",
-                                                              Colors.red,
-                                                              Colors.white);
-                                                        });
-                                                      },
-                                                      child:
-                                                          const Text("Delete")),
+                                                      documentReference
+                                                          .delete()
+                                                          .whenComplete(() {
+                                                        showSnackbarC(
+                                                            context,
+                                                            "Deleted Succesfully",
+                                                            Colors.red,
+                                                            Colors.white);
+                                                      });
+                                                    },
+                                                    child: const Text("Delete"),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () async {
+                                                      Navigator.of(context)
+                                                          .pop();
+
+                                                      ClipboardData data =
+                                                          ClipboardData(
+                                                              text:
+                                                                  documentSnapshot[
+                                                                      "msg"]);
+                                                      await Clipboard.setData(
+                                                          data);
+                                                      showSnackbarC(
+                                                          context,
+                                                          "Copied Succesfully",
+                                                          Colors.green,
+                                                          Colors.white);
+                                                    },
+                                                    child: const Text(
+                                                        "Copy Message"),
+                                                  ),
                                                 ],
                                               );
                                             });
