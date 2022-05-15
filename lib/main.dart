@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
 
           if ((settings.name.toString().contains("custom_room")) &&
               (settingsUri.queryParameters['rnm']!.isNotEmpty) &&
-              (settingsUri.queryParameters['p']!.isNotEmpty) &&
               (settingsUri.queryParameters['rn']!.isNotEmpty)) {
             return MaterialPageRoute(
                 builder: (context) => CustomRoom(
