@@ -1,4 +1,4 @@
-import 'package:drm25/screens/chat/room_message_list.dart';
+import 'package:drm25/screens/custom_room.dart';
 import 'package:drm25/screens/home_screen/home_screen.dart';
 import 'package:drm25/screens/splash_screen.dart';
 import 'package:drm25/utils/routes.dart';
@@ -17,24 +17,39 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Dream-25',
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-      ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const SplashScreen(),
-        MyRoutes.rootRoute: (context) => const SplashScreen(),
-        MyRoutes.splashRoute: (context) => const SplashScreen(),
-        MyRoutes.loginRoute: (context) => const LoginScreen(),
-        MyRoutes.homeRootRoute: (context) => const HomeScreen(),
-      },
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Dream-25',
+        theme: ThemeData(
+          primarySwatch: Colors.indigo,
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const SplashScreen(),
+          MyRoutes.rootRoute: (context) => const SplashScreen(),
+          MyRoutes.splashRoute: (context) => const SplashScreen(),
+          MyRoutes.loginRoute: (context) => const LoginScreen(),
+          MyRoutes.homeRootRoute: (context) => const HomeScreen(),
+          MyRoutes.customRoomRoute: (context) => CustomRoom("", "", ""),
+        },
+        onGenerateRoute: (settings) {
+          final settingsUri = Uri.parse(settings.name.toString());
+
+          if ((settings.name.toString().contains("custom_room")) &&
+              (settingsUri.queryParameters['rnm']!.isNotEmpty) &&
+              (settingsUri.queryParameters['p']!.isNotEmpty) &&
+              (settingsUri.queryParameters['rn']!.isNotEmpty)) {
+            return MaterialPageRoute(
+                builder: (context) => CustomRoom(
+                      settingsUri.queryParameters['rnm'].toString(),
+                      settingsUri.queryParameters['rn'].toString(),
+                      settingsUri.queryParameters['p'].toString(),
+                    ));
+          } else {
+            return null;
+          }
+        });
   }
 }

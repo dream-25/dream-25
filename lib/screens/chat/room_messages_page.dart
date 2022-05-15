@@ -105,119 +105,23 @@ class _RoomMessagesState extends State<RoomMessages> {
                                 return (documentSnapshot["type"] == "TEXT")
                                     ? InkWell(
                                         onLongPress: () {
-                                          if (widget.userEmail ==
-                                                  "biswasmohan18@gmail.com" ||
-                                              widget.userEmail ==
-                                                  "biswasmohan2529@gmail.com" ||
-                                              documentSnapshot["UserEmail"] ==
-                                                  widget.userEmail) {
-                                            showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return AlertDialog(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10)),
-                                                    title: const Text(
-                                                        "Delete this Message",
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        )),
-                                                    backgroundColor: Colors
-                                                        .blueGrey.shade800,
-                                                    actions: <Widget>[
-                                                      TextButton(
-                                                          onPressed: () {
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                            DocumentReference
-                                                                documentReference =
-                                                                FirebaseFirestore
-                                                                    .instance
-                                                                    .collection(
-                                                                        "user_chats/${(widget.roomName + widget.roomNo).toString().replaceAll(" ", "-")}/saved_messages")
-                                                                    .doc(snapshot
-                                                                        .data!
-                                                                        .docs[
-                                                                            index]
-                                                                        .id);
-
-                                                            documentReference
-                                                                .delete()
-                                                                .whenComplete(
-                                                                    () {
-                                                              showSnackbarC(
-                                                                  context,
-                                                                  "Deleted Succesfully",
-                                                                  Colors.red,
-                                                                  Colors.white);
-                                                            });
-                                                          },
-                                                          child: const Text(
-                                                              "Delete")),
-                                                      TextButton(
-                                                        onPressed: () async {
-                                                          Navigator.of(context)
-                                                              .pop();
-
-                                                          ClipboardData data =
-                                                              ClipboardData(
-                                                                  text: documentSnapshot[
-                                                                      "msg"]);
-                                                          await Clipboard
-                                                              .setData(data);
-                                                          showSnackbarC(
-                                                              context,
-                                                              "Copied Succesfully",
-                                                              Colors.green,
-                                                              Colors.white);
-                                                        },
-                                                        child: const Text(
-                                                            "Copy Message"),
-                                                      ),
-                                                    ],
-                                                  );
-                                                });
-                                          }
-                                        },
-                                        child: CustomTextMessageSend(
-                                            documentSnapshot["msg"],
-                                            documentSnapshot["time"],
-                                            documentSnapshot["status"]),
-                                      )
-                                    : InkWell(
-                                        onLongPress: () {
-                                          if (widget.userEmail ==
-                                                  "biswasmohan18@gmail.com" ||
-                                              widget.userEmail ==
-                                                  "biswasmohan2529@gmail.com" ||
-                                              documentSnapshot["UserEmail"] ==
-                                                  widget.userEmail) {
-                                            showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return AlertDialog(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10)),
-                                                    title: const Text(
-                                                        "Delete this Message",
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        )),
-                                                    backgroundColor: Colors
-                                                        .blueGrey.shade800,
-                                                    actions: <Widget>[
-                                                      TextButton(
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  title: const Text(
+                                                      "Delete this Message",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                      )),
+                                                  backgroundColor:
+                                                      Colors.blueGrey.shade800,
+                                                  actions: <Widget>[
+                                                    TextButton(
                                                         onPressed: () {
                                                           Navigator.of(context)
                                                               .pop();
@@ -244,32 +148,107 @@ class _RoomMessagesState extends State<RoomMessages> {
                                                           });
                                                         },
                                                         child: const Text(
-                                                            "Delete"),
-                                                      ),
-                                                      TextButton(
-                                                        onPressed: () async {
-                                                          Navigator.of(context)
-                                                              .pop();
+                                                            "Delete")),
+                                                    TextButton(
+                                                      onPressed: () async {
+                                                        Navigator.of(context)
+                                                            .pop();
 
-                                                          ClipboardData data =
-                                                              ClipboardData(
-                                                                  text: documentSnapshot[
-                                                                      "msg"]);
-                                                          await Clipboard
-                                                              .setData(data);
+                                                        ClipboardData data =
+                                                            ClipboardData(
+                                                                text:
+                                                                    documentSnapshot[
+                                                                        "msg"]);
+                                                        await Clipboard.setData(
+                                                            data);
+                                                        showSnackbarC(
+                                                            context,
+                                                            "Copied Succesfully",
+                                                            Colors.green,
+                                                            Colors.white);
+                                                      },
+                                                      child: const Text(
+                                                          "Copy Message"),
+                                                    ),
+                                                  ],
+                                                );
+                                              });
+                                        },
+                                        child: CustomTextMessageSend(
+                                            documentSnapshot["msg"],
+                                            documentSnapshot["time"],
+                                            documentSnapshot["status"]),
+                                      )
+                                    : InkWell(
+                                        onLongPress: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  title: const Text(
+                                                      "Delete this Message",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                      )),
+                                                  backgroundColor:
+                                                      Colors.blueGrey.shade800,
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                        DocumentReference
+                                                            documentReference =
+                                                            FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    "user_chats/${(widget.roomName + widget.roomNo).toString().replaceAll(" ", "-")}/saved_messages")
+                                                                .doc(snapshot
+                                                                    .data!
+                                                                    .docs[index]
+                                                                    .id);
+
+                                                        documentReference
+                                                            .delete()
+                                                            .whenComplete(() {
                                                           showSnackbarC(
                                                               context,
-                                                              "Copied Succesfully",
-                                                              Colors.green,
+                                                              "Deleted Succesfully",
+                                                              Colors.red,
                                                               Colors.white);
-                                                        },
-                                                        child: const Text(
-                                                            "Copy Message"),
-                                                      ),
-                                                    ],
-                                                  );
-                                                });
-                                          }
+                                                        });
+                                                      },
+                                                      child:
+                                                          const Text("Delete"),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () async {
+                                                        Navigator.of(context)
+                                                            .pop();
+
+                                                        ClipboardData data =
+                                                            ClipboardData(
+                                                                text:
+                                                                    documentSnapshot[
+                                                                        "msg"]);
+                                                        await Clipboard.setData(
+                                                            data);
+                                                        showSnackbarC(
+                                                            context,
+                                                            "Copied Succesfully",
+                                                            Colors.green,
+                                                            Colors.white);
+                                                      },
+                                                      child: const Text(
+                                                          "Copy Message"),
+                                                    ),
+                                                  ],
+                                                );
+                                              });
                                         },
                                         child: CustomFileMessageSend(
                                           documentSnapshot["msg"],
@@ -283,122 +262,23 @@ class _RoomMessagesState extends State<RoomMessages> {
                                 return (documentSnapshot["type"] == "TEXT")
                                     ? InkWell(
                                         onLongPress: () {
-                                          if (widget.userEmail ==
-                                                  "biswasmohan18@gmail.com" ||
-                                              widget.userEmail ==
-                                                  "biswasmohan2529@gmail.com" ||
-                                              documentSnapshot["UserEmail"] ==
-                                                  widget.userEmail) {
-                                            showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return AlertDialog(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10)),
-                                                    title: const Text(
-                                                        "Delete this Message",
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        )),
-                                                    backgroundColor: Colors
-                                                        .blueGrey.shade800,
-                                                    actions: <Widget>[
-                                                      TextButton(
-                                                          onPressed: () {
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                            DocumentReference
-                                                                documentReference =
-                                                                FirebaseFirestore
-                                                                    .instance
-                                                                    .collection(
-                                                                        "user_chats/${(widget.roomName + widget.roomNo).toString().replaceAll(" ", "-")}/saved_messages")
-                                                                    .doc(snapshot
-                                                                        .data!
-                                                                        .docs[
-                                                                            index]
-                                                                        .id);
-
-                                                            documentReference
-                                                                .delete()
-                                                                .whenComplete(
-                                                                    () {
-                                                              showSnackbarC(
-                                                                  context,
-                                                                  "Deleted Succesfully",
-                                                                  Colors.red,
-                                                                  Colors.white);
-                                                            });
-                                                          },
-                                                          child: const Text(
-                                                              "Delete")),
-                                                      TextButton(
-                                                        onPressed: () async {
-                                                          Navigator.of(context)
-                                                              .pop();
-
-                                                          ClipboardData data =
-                                                              ClipboardData(
-                                                                  text: documentSnapshot[
-                                                                      "msg"]);
-                                                          await Clipboard
-                                                              .setData(data);
-                                                          showSnackbarC(
-                                                              context,
-                                                              "Copied Succesfully",
-                                                              Colors.green,
-                                                              Colors.white);
-                                                        },
-                                                        child: const Text(
-                                                            "Copy Message"),
-                                                      ),
-                                                    ],
-                                                  );
-                                                });
-                                          }
-                                        },
-                                        child: CustomTextMessageRcv(
-                                            documentSnapshot["UserName"],
-                                            documentSnapshot["UserEmail"],
-                                            documentSnapshot["UserPic"],
-                                            documentSnapshot["msg"],
-                                            documentSnapshot["time"],
-                                            documentSnapshot["status"]),
-                                      )
-                                    : InkWell(
-                                        onLongPress: () {
-                                          if (widget.userEmail ==
-                                                  "biswasmohan18@gmail.com" ||
-                                              widget.userEmail ==
-                                                  "biswasmohan2529@gmail.com" ||
-                                              documentSnapshot["UserEmail"] ==
-                                                  widget.userEmail) {
-                                            showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return AlertDialog(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10)),
-                                                    title: const Text(
-                                                        "Delete this Message",
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        )),
-                                                    backgroundColor: Colors
-                                                        .blueGrey.shade800,
-                                                    actions: <Widget>[
-                                                      TextButton(
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  title: const Text(
+                                                      "Delete this Message",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                      )),
+                                                  backgroundColor:
+                                                      Colors.blueGrey.shade800,
+                                                  actions: <Widget>[
+                                                    TextButton(
                                                         onPressed: () {
                                                           Navigator.of(context)
                                                               .pop();
@@ -425,32 +305,110 @@ class _RoomMessagesState extends State<RoomMessages> {
                                                           });
                                                         },
                                                         child: const Text(
-                                                            "Delete"),
-                                                      ),
-                                                      TextButton(
-                                                        onPressed: () async {
-                                                          Navigator.of(context)
-                                                              .pop();
+                                                            "Delete")),
+                                                    TextButton(
+                                                      onPressed: () async {
+                                                        Navigator.of(context)
+                                                            .pop();
 
-                                                          ClipboardData data =
-                                                              ClipboardData(
-                                                                  text: documentSnapshot[
-                                                                      "msg"]);
-                                                          await Clipboard
-                                                              .setData(data);
+                                                        ClipboardData data =
+                                                            ClipboardData(
+                                                                text:
+                                                                    documentSnapshot[
+                                                                        "msg"]);
+                                                        await Clipboard.setData(
+                                                            data);
+                                                        showSnackbarC(
+                                                            context,
+                                                            "Copied Succesfully",
+                                                            Colors.green,
+                                                            Colors.white);
+                                                      },
+                                                      child: const Text(
+                                                          "Copy Message"),
+                                                    ),
+                                                  ],
+                                                );
+                                              });
+                                        },
+                                        child: CustomTextMessageRcv(
+                                            documentSnapshot["UserName"],
+                                            documentSnapshot["UserEmail"],
+                                            documentSnapshot["UserPic"],
+                                            documentSnapshot["msg"],
+                                            documentSnapshot["time"],
+                                            documentSnapshot["status"]),
+                                      )
+                                    : InkWell(
+                                        onLongPress: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  title: const Text(
+                                                      "Delete this Message",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                      )),
+                                                  backgroundColor:
+                                                      Colors.blueGrey.shade800,
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                        DocumentReference
+                                                            documentReference =
+                                                            FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    "user_chats/${(widget.roomName + widget.roomNo).toString().replaceAll(" ", "-")}/saved_messages")
+                                                                .doc(snapshot
+                                                                    .data!
+                                                                    .docs[index]
+                                                                    .id);
+
+                                                        documentReference
+                                                            .delete()
+                                                            .whenComplete(() {
                                                           showSnackbarC(
                                                               context,
-                                                              "Copied Succesfully",
-                                                              Colors.green,
+                                                              "Deleted Succesfully",
+                                                              Colors.red,
                                                               Colors.white);
-                                                        },
-                                                        child: const Text(
-                                                            "Copy Message"),
-                                                      ),
-                                                    ],
-                                                  );
-                                                });
-                                          }
+                                                        });
+                                                      },
+                                                      child:
+                                                          const Text("Delete"),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () async {
+                                                        Navigator.of(context)
+                                                            .pop();
+
+                                                        ClipboardData data =
+                                                            ClipboardData(
+                                                                text:
+                                                                    documentSnapshot[
+                                                                        "msg"]);
+                                                        await Clipboard.setData(
+                                                            data);
+                                                        showSnackbarC(
+                                                            context,
+                                                            "Copied Succesfully",
+                                                            Colors.green,
+                                                            Colors.white);
+                                                      },
+                                                      child: const Text(
+                                                          "Copy Message"),
+                                                    ),
+                                                  ],
+                                                );
+                                              });
                                         },
                                         child: CustomFileMessageRcv(
                                           documentSnapshot["UserName"],

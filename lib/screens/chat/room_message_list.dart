@@ -1,7 +1,11 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drm25/screens/chat/room_messages_page.dart';
 import 'package:drm25/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RoomMessageList extends StatefulWidget {
   String userName;
@@ -67,14 +71,87 @@ class _RoomMessageListState extends State<RoomMessageList> {
                       color: Colors.blueGrey.shade100,
                       child: InkWell(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => RoomMessages(
-                                    widget.userName.toString(),
-                                    widget.userEmail.toString(),
-                                    widget.userPic.toString(),
-                                    documentSnapshot["room_name"],
-                                    documentSnapshot["room_no"],
-                                  )));
+                          String password = documentSnapshot['room_password'];
+                          if (password == "") {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => RoomMessages(
+                                      widget.userName.toString(),
+                                      widget.userEmail.toString(),
+                                      widget.userPic.toString(),
+                                      documentSnapshot["room_name"],
+                                      documentSnapshot["room_no"],
+                                    )));
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  final TextEditingController
+                                      passwordController =
+                                      TextEditingController();
+
+                                  return AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    content: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          3 /
+                                          4,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.35,
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8, vertical: 8),
+                                            child: TextField(
+                                              controller: passwordController,
+                                              decoration: const InputDecoration(
+                                                border: OutlineInputBorder(),
+                                                hintText: 'Enter room Password',
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              if (password ==
+                                                  passwordController.text) {
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            RoomMessages(
+                                                              widget.userName
+                                                                  .toString(),
+                                                              widget.userEmail
+                                                                  .toString(),
+                                                              widget.userPic
+                                                                  .toString(),
+                                                              documentSnapshot[
+                                                                  "room_name"],
+                                                              documentSnapshot[
+                                                                  "room_no"],
+                                                            )));
+                                              } else {
+                                                Fluttertoast.showToast(
+                                                    msg: "Wrong Password");
+                                              }
+                                            },
+                                            child: const Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  30, 16, 30, 16),
+                                              child: Text("Save"),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                });
+                          }
                         },
                         child: ListTile(
                           trailing: (widget.userEmail ==
@@ -197,7 +274,7 @@ class _RoomMessageListState extends State<RoomMessageList> {
                                                             ),
                                                           ),
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 10,
                                                         ),
                                                         ElevatedButton(
@@ -207,14 +284,10 @@ class _RoomMessageListState extends State<RoomMessageList> {
                                                                     context)
                                                                 .pop();
                                                           },
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .fromLTRB(
-                                                                    30,
-                                                                    16,
-                                                                    30,
-                                                                    16),
+                                                          child: const Padding(
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(30,
+                                                                    16, 30, 16),
                                                             child: Text("Save"),
                                                           ),
                                                         )
@@ -254,6 +327,28 @@ class _RoomMessageListState extends State<RoomMessageList> {
                                                 Colors.red.shade600,
                                             child: const Icon(
                                               Icons.delete,
+                                              color: Colors.white,
+                                            )),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      InkWell(
+                                        onTap: () async {
+                                          ClipboardData data = ClipboardData(
+                                              text:
+                                                  """Link - http://dream-25.web.app/#/custom_room?rnm=${documentSnapshot['room_name']}&rn=${documentSnapshot['room_no']}&p=${documentSnapshot['room_password']}
+                                            password - ${documentSnapshot['room_password']}
+                                                  """);
+                                          await Clipboard.setData(data);
+                                          showSnackbarC(
+                                              context,
+                                              "Link copied to Clipboard",
+                                              Colors.green,
+                                              Colors.white);
+                                        },
+                                        child: const CircleAvatar(
+                                            backgroundColor: Colors.green,
+                                            child: Icon(
+                                              Icons.copy,
                                               color: Colors.white,
                                             )),
                                       )
@@ -359,7 +454,7 @@ class _RoomMessageListState extends State<RoomMessageList> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           ElevatedButton(
@@ -367,9 +462,8 @@ class _RoomMessageListState extends State<RoomMessageList> {
                               createToDo();
                               Navigator.of(context).pop();
                             },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(30, 16, 30, 16),
+                            child: const Padding(
+                              padding: EdgeInsets.fromLTRB(30, 16, 30, 16),
                               child: Text("Save"),
                             ),
                           )
