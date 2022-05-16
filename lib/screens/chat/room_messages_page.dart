@@ -495,7 +495,7 @@ class _RoomMessagesState extends State<RoomMessages> {
                                         .child(
                                             "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}//$fileName")
                                         .putData(file!)
-                                        .then((p0) {
+                                        .then((p0) async {
                                       DateTime now = DateTime.now();
                                       String formattedDate =
                                           DateFormat('hh:mm:ss aa').format(now);
@@ -516,8 +516,8 @@ class _RoomMessagesState extends State<RoomMessages> {
                                             .toString(),
                                         "msg": message,
                                         "file_name": fileName,
-                                        "file":
-                                            "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}/$fileName",
+                                        "file": await storage.downloadURl(
+                                            "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}/$fileName"),
                                         "time": formattedDate,
                                         "time_mili": DateTime.now()
                                             .millisecondsSinceEpoch
@@ -561,7 +561,7 @@ class _RoomMessagesState extends State<RoomMessages> {
                                     storage
                                         .uploadFile(path, fileName,
                                             "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}/")
-                                        .then((value) {
+                                        .then((value) async {
                                       DateTime now = DateTime.now();
                                       String formattedDate =
                                           DateFormat('hh:mm:ss aa').format(now);
@@ -582,8 +582,8 @@ class _RoomMessagesState extends State<RoomMessages> {
                                             .toString(),
                                         "msg": message,
                                         "file_name": fileName,
-                                        "file":
-                                            "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}/$fileName",
+                                        "file": await storage.downloadURl(
+                                            "user_messages/files/${widget.userEmail.toString().replaceAll("@", "-")}/$fileName"),
                                         "time": formattedDate,
                                         "time_mili": DateTime.now()
                                             .millisecondsSinceEpoch
