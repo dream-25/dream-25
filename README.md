@@ -1,10 +1,16 @@
 # 💫About Me :
 🤖 Its Me Dream-25
+
 🔭 Founder of Dream Softwares
+
 👯 I’m currently Learning and Making a Team
+
 🤝 I’m looking for Devs For My Team
+
 💬 Ask me about TECH
+
 ⚡ Fun fact - I Love to Travel
+
 
 ## 🌐Socials
 [![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/its.mohan_) 
