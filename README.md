@@ -1,4 +1,5 @@
 # 💫About Me :
+🤖 Its Me Dream-25
 🔭 Founder of Dream Softwares
 👯 I’m currently Learning and Making a Team
 🤝 I’m looking for Devs For My Team
@@ -15,7 +16,7 @@
 ![](https://github-readme-streak-stats.herokuapp.com/?user=dream-25&theme=tokyonight&hide_border=false)<br/>
 ![](https://github-readme-stats.vercel.app/api/top-langs/?username=dream-25&theme=tokyonight&hide_border=false&include_all_commits=true&count_private=true&layout=compact)
 
-### ✍️Random Dev Quote
+### ✍️Everyday Dev Quote
 ![](https://quotes-github-readme.vercel.app/api?type=horizontal&theme=dark)
 
 
