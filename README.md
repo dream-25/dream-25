@@ -3,7 +3,7 @@
 
 🔭 Founder of Dream Softwares
 
-👯 I’m currently Learning and Making a Team
+👯 I’m currently Working as a Freelancer
 
 🤝 I’m looking for Devs For My Team
 
